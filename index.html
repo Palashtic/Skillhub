@@ -1,43 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Includeing the Favorite Icon -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <!-- Computer Character Set - Not to Important -->
+<head>
     <meta charset="UTF-8">
-    <!-- Description of the Website -->
-    <meta name="description" content="SkillHub by Team Orange">
-    <!-- Keywords for Document -->
-    <meta name="keywords" content="SkillHub by Team Orange">
-    <!-- Author of Document -->
-    <meta name="author" content="Team Orange">
-    <!-- Title -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skill Hub</title>
-    <!-- Font Awesome -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Author Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">    
-  </head>
-  <body>
-    <!-- Top Section - Navigation -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <style>
+        /* Basic Styling */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navigation Links Styling */
+        .top-navigation {
+            list-style: none;
+            padding: 0;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1rem;
+        }
+
+        .top-navigation li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        .top-navigation a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Container Styling */
+        .container {
+            text-align: center;
+            font-size: 4rem;
+            font-weight: bold;
+        }
+
+        /* Animated Text Styling */
+        .text-static {
+            color: #ffffff;
+        }
+
+        .text-dynamic {
+            color: #000000;
+            background-color: #ff9900;
+            padding: 5px 15px;
+            margin-left: 5px;
+            border-radius: 20px;
+            display: inline-block;
+            animation: scrollUp 2s ease-in-out;
+        }
+
+        /* Search Box Styling */
+        .search-box {
+            margin-top: 20px;
+        }
+
+        .search-box input[type="text"] {
+            padding: 10px;
+            font-size: 1rem;
+            width: 600px;
+            margin: 10px 0;
+            border: 2px solid #ff9900;
+            border-radius: 5px;
+        }
+
+        .search-buttons button {
+            padding: 8px 16px;
+            margin: 5px;
+            font-size: 1rem;
+            color: #000000;
+            background-color: #ff9900;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Scroll Animation for Job Titles */
+        @keyframes scrollUp {
+            0% { transform: translateY(100%); opacity: 0; }
+            10% { opacity: 1; }
+            40% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
+        }
+
+        /* Career Events Popup Styling */
+        .career-events {
+            display: none; /* Hidden by default */
+            background-color: #ff9900;
+            color: #000000;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 80%;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Links -->
     <ul class="top-navigation">
-      <li>
-        <a href="https://www.linkedin.com/in/aditya-kalaga/" style="color:white;">+Adi</a>
-      </li>
-	 <li>
-        <a href="https://www.linkedin.com/in/chaturvedipalash/" style="color:white;">+Palash</a>
-      </li>
- 	<li>
-        <a href="https://www.linkedin.com/in/robert-gagne-/" style="color:white;">+Robert</a>
-      </li>
- 	<li>
-        <a href="https://www.linkedin.com/in/yandalyu/" style="color:white;">+Yanda</a>
-      </li>
+        <li><a href="https://www.linkedin.com/in/aditya-kalaga/">+Adi</a></li>
+        <li><a href="https://www.linkedin.com/in/chaturvedipalash/">+Palash</a></li>
+        <li><a href="https://www.linkedin.com/in/robert-gagne-/">+Robert</a></li>
+        <li><a href="https://www.linkedin.com/in/yandalyu/">+Yanda</a></li>
     </ul>
-    <!-- Middle Section - Search Box -->
-<div class="search-container">
-        <span class="text-static" id="static-text">I want to become</span>
-        <span class="text-dynamic" id="job-title">Product Manager</span>
+
+    <div class="container">
+        <div class="search-container">
+            <span class="text-static" id="static-text">I want to become</span>
+            <span class="text-dynamic" id="job-title">Product Manager</span>
+        </div>
+
+        <!-- Search Box Section, Positioned Below Animated Text -->
+        <div class="search-box">
+            <input type="text" placeholder="What you want to become?" autofocus>
+            <div class="search-buttons">
+                <button onclick="showCareerEvents()">I have no clue</button>
+                <button>Search</button>
+            </div>
+        </div>
+
+        <!-- Career Events Popup -->
+        <div class="career-events" id="career-events">
+            <p>Why don't you check these upcoming career events near you?</p>
+            <ul id="events-list">
+                <!-- Real events will populate here -->
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -53,34 +155,45 @@
         const staticTextElement = document.getElementById("static-text");
 
         function rotateJobTitles() {
-            // Reset animation by removing and re-adding the class
             jobTitleElement.classList.remove("text-dynamic");
             void jobTitleElement.offsetWidth; // Trigger reflow
             jobTitleElement.classList.add("text-dynamic");
 
-            // If we reach the end of the list, show "Skill Hub" and stop the interval
+            // Show "Skill Hub" at the end
             if (currentIndex === jobTitles.length) {
                 staticTextElement.textContent = "Skill";
                 jobTitleElement.textContent = "Hub";
-                clearInterval(titleInterval); // Stop the rotation
+                clearInterval(titleInterval); // Stop rotation
             } else {
-                // Otherwise, continue displaying job titles
                 jobTitleElement.textContent = jobTitles[currentIndex];
                 currentIndex++;
             }
         }
 
-        // Change the job title every 2 seconds
         const titleInterval = setInterval(rotateJobTitles, 2000);
-    </script>
 
-    <div class="search-box">
-      <!--img src="img/google.png"-->
-      <input type="text" autofocus placeholder="What you want to become?">
-      <div class="search-buttons">
-        <button>Search</button>
-        <button>I have no clue</button>
-      </div>
-    </div>
-  </body>
+        // Show Career Events Popup
+        function showCareerEvents() {
+            const eventsElement = document.getElementById("career-events");
+            const eventsList = document.getElementById("events-list");
+
+            // Mock API call to fetch real event data (you can replace this part)
+            const events = [
+                { date: "Nov 2", title: "Tech Careers Expo" },
+                { date: "Nov 5", title: "Data Science Workshop" },
+                { date: "Nov 7", title: "Business Networking Night" }
+            ];
+
+            // Populate events in the popup
+            eventsList.innerHTML = "";
+            events.forEach(event => {
+                const li = document.createElement("li");
+                li.textContent = `📅 ${event.date} - ${event.title}`;
+                eventsList.appendChild(li);
+            });
+
+            eventsElement.style.display = "block";
+        }
+    </script>
+</body>
 </html>

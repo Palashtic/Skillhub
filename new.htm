@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Tracker Animation</title>
+    <style>
+        /* Basic Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centering and styling the container */
+        .search-container {
+            text-align: center;
+            font-size: 3rem; /* Increased font size */
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        /* Styling for static and dynamic text */
+        .text-static, .text-dynamic {
+            display: inline-block;
+        }
+
+        .text-static {
+            color: #555555;
+            transition: all 0.5s ease;
+        }
+
+        .text-dynamic {
+            color: #ffffff;
+            background-color: #ff9900;
+            padding: 5px 15px;
+            margin-left: 10px;
+            display: inline-block;
+            animation: scrollUp 2s ease-in-out;
+        }
+
+        /* Animation for scrolling up text */
+        @keyframes scrollUp {
+            0% { transform: translateY(100%); opacity: 0; }
+            10% { opacity: 1; }
+            40% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <span class="text-static" id="static-text">I want to become</span>
+        <span class="text-dynamic" id="job-title">Product Manager</span>
+    </div>
+
+    <script>
+        const jobTitles = [
+            "Product Manager",
+            "Data Scientist",
+            "Sales",
+            "Consultant",
+            "Software Engineer"
+        ];
+
+        let currentIndex = 0;
+        const jobTitleElement = document.getElementById("job-title");
+        const staticTextElement = document.getElementById("static-text");
+
+        function rotateJobTitles() {
+            // Reset animation by removing and re-adding the class
+            jobTitleElement.classList.remove("text-dynamic");
+            void jobTitleElement.offsetWidth; // Trigger reflow
+            jobTitleElement.classList.add("text-dynamic");
+
+            // If we reach the end of the list, show "Skill Hub" and stop the interval
+            if (currentIndex === jobTitles.length) {
+                staticTextElement.textContent = "Skill";
+                jobTitleElement.textContent = "Hub";
+                clearInterval(titleInterval); // Stop the rotation
+            } else {
+                // Otherwise, continue displaying job titles
+                jobTitleElement.textContent = jobTitles[currentIndex];
+                currentIndex++;
+            }
+        }
+
+        // Change the job title every 2 seconds
+        const titleInterval = setInterval(rotateJobTitles, 2000);
+    </script>
+</body>
+</html>

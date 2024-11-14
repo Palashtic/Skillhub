@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Includeing the Favorite Icon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Computer Character Set - Not to Important -->
+    <meta charset="UTF-8">
+    <!-- Description of the Website -->
+    <meta name="description" content="SkillHub by Team Orange">
+    <!-- Keywords for Document -->
+    <meta name="keywords" content="SkillHub by Team Orange">
+    <!-- Author of Document -->
+    <meta name="author" content="Team Orange">
+    <!-- Title -->
+    <title>Skill Hub</title>
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Author Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">    
+  </head>
+  <body>
+    <!-- Top Section - Navigation -->
+    <ul class="top-navigation">
+      <li>
+        <a href="https://www.linkedin.com/in/aditya-kalaga/" style="color:white;">+Adi</a>
+      </li>
+	 <li>
+        <a href="https://www.linkedin.com/in/chaturvedipalash/" style="color:white;">+Palash</a>
+      </li>
+ 	<li>
+        <a href="https://www.linkedin.com/in/robert-gagne-/" style="color:white;">+Robert</a>
+      </li>
+ 	<li>
+        <a href="https://www.linkedin.com/in/yandalyu/" style="color:white;">+Yanda</a>
+      </li>
+    </ul>
+    <!-- Middle Section - Search Box -->
+<div class="search-container">
+        <span class="text-static" id="static-text">I want to become</span>
+        <span class="text-dynamic" id="job-title">Product Manager</span>
+    </div>
+
+    <script>
+        const jobTitles = [
+            "Data Scientist",
+            "Sales Executive",
+            "Consultant",
+            "Software Engineer"
+        ];
+
+        let currentIndex = 0;
+        const jobTitleElement = document.getElementById("job-title");
+        const staticTextElement = document.getElementById("static-text");
+
+        function rotateJobTitles() {
+            // Reset animation by removing and re-adding the class
+            jobTitleElement.classList.remove("text-dynamic");
+            void jobTitleElement.offsetWidth; // Trigger reflow
+            jobTitleElement.classList.add("text-dynamic");
+
+            // If we reach the end of the list, show "Skill Hub" and stop the interval
+            if (currentIndex === jobTitles.length) {
+                staticTextElement.textContent = "Skill";
+                jobTitleElement.textContent = "Hub";
+                clearInterval(titleInterval); // Stop the rotation
+            } else {
+                // Otherwise, continue displaying job titles
+                jobTitleElement.textContent = jobTitles[currentIndex];
+                currentIndex++;
+            }
+        }
+
+        // Change the job title every 2 seconds
+        const titleInterval = setInterval(rotateJobTitles, 2000);
+    </script>
+
+    <div class="search-box">
+      <!--img src="img/google.png"-->
+      <input type="text" autofocus placeholder="What you want to become?">
+      <div class="search-buttons">
+        <button>Search</button>
+        <button>I have no clue</button>
+      </div>
+    </div>
+  </body>
+</html>
